@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<link rel="icon" type="image/png" href="images/favicon.png">
+<title>Title</title>
+
+<!-- FONTS -->
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700%7CRaleway:300,400,700,800" rel="stylesheet"> 
+
+<!-- CSS FILES -->
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="css/owl.carousel.min.css" rel="stylesheet" type="text/css" />
+<link href="css/zoomslider.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+	
+	<!-- COMING SOON PAGE -->
+	<section class="page-coming full">
+	    
+	        <div class="center">
+			<div class="container">
+	            <h1>We are Coming Soon</h1>
+	            <p class="error-text">Our website is under construction, we are working very hard to give you the<br> best experience with this one.</p>
+	            <div id="getting-started"></div>
+			</div>
+            </div>
+	    
+	</section>
+	<!-- COMING SOON PAGE END -->
+
+
+<!-- JAVASCRIPT FILES -->
+<script type="text/javascript" src="js/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTRSHf8sjMCfK9PHPJxjJkwrCIo5asIzE"></script>	
+<script type="text/javascript" src="js/map-style.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/modernizr-2.6.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.zoomslider.js"></script>
+<script type="text/javascript" src="js/jquery.parallax-1.1.3.js"></script>
+<script type="text/javascript" src="js/waypoint.js"></script>
+<script type="text/javascript" src="js/jquery.counterup.min.js"></script>
+<script type="text/javascript" src="js/jquery.countdown.min.js"></script>
+<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+<script type="text/javascript" src="js/custom-number.js"></script>
+<script type="text/javascript" src="js/jquery.select2.js"></script>
+<script type="text/javascript" src="js/jquery.swipebox.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript">
+  jQuery("#getting-started")
+  .countdown("2017/6/01", function(event) {
+    var $this = jQuery(this).html(event.strftime(''
+	    + '<div class="item">%w <span>Weeks</span></div> '
+	    + '<div class="item">%d <span>Days</span></div> '
+	    + '<div class="item">%H <span>Hours</span></div> '
+	    + '<div class="item">%M <span>Minutes</span></div> '
+	    + '<div class="item">%S <span>Seconds</span></div>'));
+	  });
+</script>
+</body>
+
+</html>
