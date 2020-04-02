@@ -17,9 +17,16 @@ from django.contrib import admin
 from django.urls import path, include 
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework.authtoken import views
+from apps.index.views import Login, Logout
+
 
 urlpatterns = [ 
     path('admin/', admin.site.urls), 
     # Enter the app name in following syntax for this to work 
     path('', include("apps.index.urls")), 
+    path('index/1.0/', include(('apps.index.urls','index'))),
+    path('index_generate_token/', views.obtain_auth_token),
+    path('login/', Login.as_view(), name = 'login'),
+    path('logout/', Logout.as_view()),
 ] 

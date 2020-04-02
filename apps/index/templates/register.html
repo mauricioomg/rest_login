@@ -21,7 +21,6 @@
 
 </head>
 
-{% block content %}
 
 <body>
 	<div class="www-layout">
@@ -51,6 +50,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4">
+                            {% block content %}
                             <div class="we-login-register">
                                 <div class="form-title">
                                     <i class="fa fa-key"></i>Sign Up
@@ -68,8 +68,8 @@
                                 <a class="with-smedia twitter" href="register.html#" title="" data-ripple="">Register with twitter</a>
                                 <span>already have an account? <a class="we-account underline" href="register.html#" title="">Sign in</a></span>
                             </div>
+                            {% endblock content %}
                         </div>
-                        
                     </div>
                 </div>
             </div>
@@ -81,6 +81,5 @@
 		<script src="{% static 'pitnik-dark/js/script.js' %}"></script>
 </body>	
 
-{% endblock content %}
 
 </html>
