@@ -509,7 +509,7 @@
 	<script src="{% static 'pitnik-dark/js/map-init.js' %}"></script><!-- map initilasition -->
 	<script src="{% static 'pitnik-dark/js/page-tourintro.js' %}"></script>
 	<script src="{% static 'pitnik-dark/js/page-tour-init.js' %}"></script>
-	<script src="{% static 'pitnik-dark/js/script.js' %}"></script>
+    <script src="{% static 'pitnik-dark/js/script.js' %}"></script>
 	<script>
 		jQuery(document).ready(function($) {
 			
@@ -533,6 +533,21 @@
 			});
 
 		});	
+</script>
+<script>
+    $(document).ready(function(){
+        $get.JSON("http://127.0.0.1:8000/api/product1/",function(data){
+            var product_data = '';
+            $.each(data,function(key, value){
+                product_data += '<tr>';
+                product_data += '<td>'+value.fullname+'</td>';
+                product_data += '<td>'+value.price+'</td>';
+                product_data += '<td>'+value.detail+'</td>';
+                product_data += '</tr>';
+            });
+            $('#product_table').append(product_data);
+        });
+    });
 </script>
 
 </body>	

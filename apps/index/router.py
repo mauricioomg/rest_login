@@ -1,0 +1,7 @@
+from api.viewsets import Product1Viewset
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register('product1', Product1Viewset)
+
+#
