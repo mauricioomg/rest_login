@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'juegosfera.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'juegosfera_db',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
-        'HOST': '127.0.0.1',
+        'NAME': 'dcpu9fldr2egmc',
+        'USER': 'diiftoegjxxzln',
+        'PASSWORD': 'a5eb1cd9ff1941ea3a4e173672c690ddaed836321629431541b44058aee3ff36',
+        'HOST': 'ec2-35-168-54-239.compute-1.amazonaws.com',
         'PORT': '5432',
     }}
 

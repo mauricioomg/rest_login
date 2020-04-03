@@ -18,6 +18,7 @@ from rest_framework.response import Response
 from rest_framework import generics
 from .models import Product
 from .serializers import ProductSerializer
+import requests
 
 
 
@@ -32,6 +33,13 @@ class ProductTable(ListView):
     template_name = 'table.html'
     model = Product
     context_object_name = "product_list"
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductTable, self).get_context_data(**kwargs)
+        response = requests.get("http://127.0.0.1:8000/api/product1/")
+        print(response.json())
+        return context
+
 
 
 class ProductList(generics.ListCreateAPIView):
