@@ -536,24 +536,24 @@
 </script>
 <script>
     $(document).ready(function(){
-		// var request = $.ajax({
-		// 	type: "GET",
-		// 	url: "http://127.0.0.1:8000/api/product1/",
-		// 	data: {},
-		// });
-		// request.done(function(response) {
-		// 	console.log(response);
-		// 	// Agregamos los resultados al select
-		// 	var product_data = '';
-        //     $.each(data,function(key, value){
-        //         product_data += '<tr>';
-        //         product_data += '<td>'+value.fullname+'</td>';
-        //         product_data += '<td>'+value.price+'</td>';
-        //         product_data += '<td>'+value.detail+'</td>';
-        //         product_data += '</tr>';
-        //     });
-        //     $('#product_table').append(product_data);
-		// });
+		var request = $.ajax({
+			type: "GET",
+			url: "http://127.0.0.1:8000/api/product1/",
+			data: {},
+		});
+		request.done(function(response) {
+			console.log(response);
+			// Agregamos los resultados al select
+			var product_data = '';
+            $.each(response,function(key, value){
+                product_data += '<tr>';
+                product_data += '<td>'+value.fullname+'</td>';
+                product_data += '<td>'+value.price+'</td>';
+                product_data += '<td>'+value.detail+'</td>';
+                product_data += '</tr>';
+            });
+            $('#product_table').append(product_data);
+		});
         // $get.JSON("http://127.0.0.1:8000/api/product1/",function(data){
         //     var product_data = '';
         //     $.each(data,function(key, value){
