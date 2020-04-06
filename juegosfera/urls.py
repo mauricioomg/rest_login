@@ -17,16 +17,17 @@ from django.contrib import admin
 from django.urls import path, include 
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.decorators import login_required
 from rest_framework.authtoken import views
-from apps.index.views import Login, Logout
+from apps.usuario.views import Login, Logout
 
 
 urlpatterns = [ 
     path('admin/', admin.site.urls), 
     # Enter the app name in following syntax for this to work 
-    path('', include("apps.index.urls")), 
-    path('index/1.0/', include(('apps.index.urls','index'))),
+    path('index/', include(('apps.index.urls','index'))),
+    path('usuario/', include(('apps.usuario.urls','usuario'))),
     path('index_generate_token/', views.obtain_auth_token),
-    path('login/', Login.as_view(), name = 'login'),
-    path('logout/', Logout.as_view()),
-] 
+    path('accounts/login/', Login.as_view(), name = 'login'),
+    path('logout/', login_required(Logout), name = 'logout'),
+]   
