@@ -30,4 +30,5 @@ urlpatterns = [
     path('index_generate_token/', views.obtain_auth_token),
     path('accounts/login/', Login.as_view(), name = 'login'),
     path('logout/', login_required(Logout), name = 'logout'),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]   

@@ -13,7 +13,7 @@
     
     <link rel="stylesheet" href="{% static 'pitnik-dark/css/main.min.css' %}">
 	<link rel="stylesheet" href="{% static 'pitnik-dark/css/weather-icons.min.css' %}">
-	<link rel="stylesheet" href="{% static 'pitnik-dark/css/toast-notification.css' %}">
+	<!-- <link rel="stylesheet" href="{% static 'pitnik-dark/css/toast-notification.css' %}"> -->
 	<link rel="stylesheet" href="{% static 'pitnik-dark/css/page-tour.css' %}">
     <link rel="stylesheet" href="{% static 'pitnik-dark/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'pitnik-dark/css/color.css' %}">
@@ -502,13 +502,13 @@
 	
 	<script src="{% static 'pitnik-dark/js/main.min.js' %}"></script>
 	<script src="{% static 'pitnik-dark/js/jquery-stories.js' %}"></script>
-	<script src="{% static 'pitnik-dark/js/toast-notificatons.js' %}"></script>
+	<!-- <script src="{% static 'pitnik-dark/js/toast-notificatons.js' %}"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script><!-- For timeline slide show -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script><!-- for location picker map -->
 	<script src="{% static 'pitnik-dark/js/locationpicker.jquery.js' %}"></script><!-- for loaction picker map -->
 	<script src="{% static 'pitnik-dark/js/map-init.js' %}"></script><!-- map initilasition -->
-	<script src="{% static 'pitnik-dark/js/page-tourintro.js' %}"></script>
-	<script src="{% static 'pitnik-dark/js/page-tour-init.js' %}"></script>
+	<!-- <script src="{% static 'pitnik-dark/js/page-tourintro.js' %}"></script> -->
+	<!-- <script src="{% static 'pitnik-dark/js/page-tour-init.js' %}"></script> -->
     <script src="{% static 'pitnik-dark/js/script.js' %}"></script>
 	<script>
 		jQuery(document).ready(function($) {
@@ -538,7 +538,7 @@
     $(document).ready(function(){
 		var request = $.ajax({
 			type: "GET",
-			url: "http://127.0.0.1:8000/api/product1/",
+			url: "http://127.0.0.1:8000/index/api/product1/",
 			data: {},
 		});
 		request.done(function(response) {
@@ -547,6 +547,7 @@
 			var product_data = '';
             $.each(response,function(key, value){
                 product_data += '<tr>';
+                product_data += '<td>'+value.id+'</td>';
                 product_data += '<td>'+value.fullname+'</td>';
                 product_data += '<td>'+value.price+'</td>';
                 product_data += '<td>'+value.detail+'</td>';
