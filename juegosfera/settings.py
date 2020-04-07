@@ -38,11 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.index',
-    'rest_framework',
-    'rest_framework.authtoken',
+    #'rest_framework',
+    #'rest_framework.authtoken',
     'api',
     'apps.usuario',
-    'corsheaders',
+    #'corsheaders',
   
 ]
 
@@ -92,6 +92,7 @@ DATABASES = {
         'HOST': 'ec2-35-168-54-239.compute-1.amazonaws.com',
         'PORT': '5432',
     }}
+    
 
 
 # Password validation
@@ -140,10 +141,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
-}

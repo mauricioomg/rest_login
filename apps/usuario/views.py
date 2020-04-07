@@ -7,13 +7,25 @@ from rest_framework.authtoken.models import Token
 from django.views.generic.edit import FormView
 from django.views.generic import TemplateView
 from django.http import HttpResponseRedirect
+from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerializer
 from django.urls import reverse_lazy
+from rest_framework import status
 
 
-class RegisterView(TemplateView):
-    template_name = "register.html"
+class Register(FormView):
+    template_name = 'register.html'
+    form_class = AuthenticationForm
+    success_url = reverse_lazy('index:login')
+
+    def post(self, request):
+        serializer = UserSerializer(data = request.POST.copy())
+        if serializer.is_valid():
+            user = serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 
 class Login(FormView):
@@ -40,5 +52,5 @@ class Login(FormView):
 class Logout(APIView):
     def get(self, request, format = None):
         request.user.auth_token.delete()
-        logout(request)
-        return Response(status = status.HTTP_200_OK), HttpResponseRedirect('login')
+       # logout(request)
+        return Response(status = status.HTTP_200_OK)

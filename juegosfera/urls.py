@@ -15,20 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin 
 from django.urls import path, include 
-from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
 from rest_framework.authtoken import views
-from apps.usuario.views import Login, Logout
+from apps.usuario.views import Login, Logout, Register
 
 
 urlpatterns = [ 
     path('admin/', admin.site.urls), 
-    # Enter the app name in following syntax for this to work 
     path('index/', include(('apps.index.urls','index'))),
     path('usuario/', include(('apps.usuario.urls','usuario'))),
     path('index_generate_token/', views.obtain_auth_token),
     path('accounts/login/', Login.as_view(), name = 'login'),
-    path('logout/', login_required(Logout), name = 'logout'),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('logout/', Logout, name = 'logout'),
+    #path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('register/', Register.as_view(), name = 'register')
 ]   

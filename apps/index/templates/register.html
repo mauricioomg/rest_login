@@ -49,27 +49,26 @@
                                 </div>
                             </div>
                         </div>
+                        {% block content %}
                         <div class="col-lg-4">
-                            {% block content %}
                             <div class="we-login-register">
                                 <div class="form-title">
-                                    <i class="fa fa-key"></i>Sign Up
-                                    <span>Sign Up now and meet the awesome friends around the world.</span>
+                                    <i class="fa fa-key"></i>Registrate
+                                    <span>Conoce nuestros productos</span>
                                 </div>
                                 <form class="we-form" method="post">
-                                    <input type="text" placeholder="Email">
-                                    <input type="password" placeholder="Password">
-                                    <input type="text" placeholder="+1234-567-987">
-                                    <input type="checkbox"><label>Send code to Mobile</label>
-                                    <button type="submit" data-ripple="">Register</button>
-                                    <a class="forgot underline" href="register.html#" title="">forgot password?</a>
+                                    {% csrf_token %}
+                                    <input type="text" class="keyword-input text-center" placeholder="Nombre" name="first_name" id="id_first_name" {% if form.first_name.value %} value="{{form.first_name.value}}" {% endif %} required>
+                                    <input type="text" class="keyword-input text-center" placeholder="Apellido" name="last_name" id="id_last_name" {% if form.last_name.value %} value="{{form.last_name.value}}" {% endif %} required>
+                                    <input type="text" class="keyword-input text-center" placeholder="Usuario" name="username" id="id_username" {% if form.username.value %} value="{{form.username.value}}" {% endif %} required>
+                                    <input type="email" class="keyword-input text-center" placeholder="Email" name="email" id="id_email" {% if form.email.value %} value="{{form.email.value}}" {% endif %} required>
+                                    <input type="password" class="keyword-input text-center" placeholder="Contraseña" name="password" id="id_password" {% if form.password.value %} value="{{form.password.value}}" {% endif %} required>
+                                    <button type="submit" data-ripple="">Registrar</button>
                                 </form>
-                                <a class="with-smedia facebook" href="register.html#" title="" data-ripple="">Register with facebook</a>
-                                <a class="with-smedia twitter" href="register.html#" title="" data-ripple="">Register with twitter</a>
-                                <span>already have an account? <a class="we-account underline" href="register.html#" title="">Sign in</a></span>
+                                <span>¿Ya tienes cuenta? <a class="we-account underline" href="../accounts/login/" title="">Ingresa</a></span>
                             </div>
-                            {% endblock content %}
                         </div>
+                        {% endblock content %}
                     </div>
                 </div>
             </div>
@@ -77,8 +76,8 @@
          
     </div>
     
-    	<script src="{% static 'pitnik-dark/js/main.min.js' %}"></script>
-		<script src="{% static 'pitnik-dark/js/script.js' %}"></script>
+
+		
 </body>	
 
 
