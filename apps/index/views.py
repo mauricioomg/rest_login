@@ -4,20 +4,31 @@
 #from rest_framework import viewsets, permissions
 from django.views.generic import TemplateView
 #from django.contrib.auth.models import User
-#import requests
-
+from django.shortcuts import render
+import requests
+#from .services import get_username
 
 class IndexView(TemplateView):
     template_name = "index.html"
 
 
-class ProductTable(TemplateView):
-    template_name = 'table.html'
-   
+#class ProductTable(TemplateView):
+  #  template_name = 'table.html'
+
+def product_get(request):
+    response = requests.get('http://127.0.0.1:8001/api/product1/')
+    data = response.json()
+    return render(request,'table.html',{
+        'id': data,
+        'fullname': data,
+        'price': data,
+        'detail': data
+
+    })
 
     #def get_context_data(self, **kwargs):
     #    context = super(ProductTable, self).get_context_data(**kwargs)
-    #    response = requests.get("http://127.0.0.1:8000/index/api/product1")
+    #    response = requests.get("http://127.0.0.1:8001/api/product1/")
     #    return context
 
 

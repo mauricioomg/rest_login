@@ -27,6 +27,9 @@ from rest_framework import status
 #        else:
 #            return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
+class Register(TemplateView):
+     template_name = 'register.html'
+
 
 class Login(FormView):
     template_name = 'login.html'

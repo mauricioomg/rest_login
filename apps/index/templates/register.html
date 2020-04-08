@@ -1,3 +1,4 @@
+{% extends 'layouts/index/base.html' %}
 {% load static %}
 
 
@@ -56,14 +57,12 @@
                                     <i class="fa fa-key"></i>Registrate
                                     <span>Conoce nuestros productos</span>
                                 </div>
-                                <form class="we-form" method="post">
-                                    {% csrf_token %}
-                                    <input type="text" class="keyword-input text-center" placeholder="Nombre" name="first_name" id="id_first_name" {% if form.first_name.value %} value="{{form.first_name.value}}" {% endif %} required>
-                                    <input type="text" class="keyword-input text-center" placeholder="Apellido" name="last_name" id="id_last_name" {% if form.last_name.value %} value="{{form.last_name.value}}" {% endif %} required>
-                                    <input type="text" class="keyword-input text-center" placeholder="Usuario" name="username" id="id_username" {% if form.username.value %} value="{{form.username.value}}" {% endif %} required>
-                                    <input type="email" class="keyword-input text-center" placeholder="Email" name="email" id="id_email" {% if form.email.value %} value="{{form.email.value}}" {% endif %} required>
-                                    <input type="password" class="keyword-input text-center" placeholder="Contraseña" name="password" id="id_password" {% if form.password.value %} value="{{form.password.value}}" {% endif %} required>
-                                    <button type="submit" data-ripple="">Registrar</button>
+                                <form class="we-form" id="miForm" method="post">
+                                    {% csrf_token %}                                    
+                                    <input type="text" class="keyword-input text-center" placeholder="Usuario" name="username" id="username" >
+                                    <input type="email" class="keyword-input text-center" placeholder="Email" name="email" id="email" >
+                                    <input type="password" class="keyword-input text-center" placeholder="Contraseña" name="password" id="password" >
+                                    <button type="submit" id="btnSend" data-ripple="">Registrar</button>
                                 </form>
                                 <span>¿Ya tienes cuenta? <a class="we-account underline" href="../accounts/login/" title="">Ingresa</a></span>
                             </div>
@@ -75,10 +74,5 @@
         </section>
          
     </div>
-    
-
-		
 </body>	
-
-
 </html>

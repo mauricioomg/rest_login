@@ -38,14 +38,21 @@
 
 {% block content %}
 <div>
-    <table class="table table-bordered table-striped" id="product_table">
+    <table class="table table-bordered table-striped" >
         <tr>
             <th>id</th>
             <th>name</th>
             <th>price</th>
             <th>detail</th>
         </tr>
+        <tr>
+            <td>{{id}}</td>
+            <td>{{fullname.fullname}}</td>
+            <td>{{price}}</td>
+            <td>{{detail}}</td>
+        </tr>
     </table>
-</div>        
+</div>       
+
     {% endblock content %}
     
