@@ -53,6 +53,37 @@ class Register(TemplateView):
         context["form"] = form
         return context
 
+        
+class Register(TemplateView):
+    template_name = 'product_register.html'
+    api_endpoint = "http://127.0.0.1:8001/api/product1/" 
+    form_class = ProductForm
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        form = context["form"]
+        errors = []
+        success = False
+        if form.is_valid():
+            data = form.cleaned_data
+            response = requests.post(self.api_endpoint, json=data)
+            if response.status_code == 200 or response.status_code == 201:
+                print('success')
+                success = True
+            else:
+                print('error')
+                response_json = response.json()
+                for error in response_json:
+                    errors.append(response_json[error])
+        context['errors'] = errors
+        context['success'] = success
+        return super(TemplateView, self).render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = self.form_class(self.request.POST or None)
+        context["form"] = form
+        return context
 
     
 
