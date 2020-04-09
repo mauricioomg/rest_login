@@ -6,6 +6,7 @@ from django.views.generic import TemplateView
 #from django.contrib.auth.models import User
 from django.shortcuts import render
 import requests
+from .forms import *
 #from .services import get_username
 
 class IndexView(TemplateView):
@@ -27,6 +28,33 @@ def product_get(request):
 class Register(TemplateView):
     template_name = 'register.html'
     api_endpoint = "http://127.0.0.1:8001/api/users/" 
+    form_class = UserForm
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        form = context["form"]
+        errors = []
+        success = False
+        if form.is_valid():
+            data = form.cleaned_data
+            response = requests.post(self.api_endpoint, json=data)
+            if response.status_code == 200 or response.status_code == 201:
+                print('success')
+                success = True
+            else:
+                print('error')
+                response_json = response.json()
+                for error in response_json:
+                    errors.append(response_json[error])
+        context['errors'] = errors
+        context['success'] = success
+        return super(TemplateView, self).render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = self.form_class(self.request.POST or None)
+        context["form"] = form
+        return context
     
     
 
