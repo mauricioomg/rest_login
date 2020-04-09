@@ -13,17 +13,14 @@ class IndexView(TemplateView):
     template_name = "index.html"
 
 
-
+  
 
 def product_get(request):
     response = requests.get('http://127.0.0.1:8001/api/product1/')
-    data = response.json()
-      
+    data = response.json()        
     return render(request,'table.html',{
         'dataproduct': data,
-       
-
-    })
+        })
 
 class Register(TemplateView):
     template_name = 'register.html'
@@ -55,16 +52,17 @@ class Register(TemplateView):
         form = self.form_class(self.request.POST or None)
         context["form"] = form
         return context
+
+
     
-    
 
 
-#class Login(FormView):
- #   template_name = 'login.html'
-  #  form_class = AuthenticationForm
-   # success_url = reverse_lazy('index:product_table')
-
-   # @method_decorator(csrf_protect)
+#class Login(TemplateView):
+#    template_name = 'login.html'
+#    form_class = AuthenticationForm
+#    success_url = reverse_lazy('index:product_table')
+#
+#    @method_decorator(csrf_protect)
 #    @method_decorator(never_cache)
 #    def dispatch(self, request, *args, **kwargs):
 #        if request.user.is_authenticated:
@@ -83,15 +81,15 @@ class Register(TemplateView):
 #class Logout(APIView):
 #    def get(self, request, format = None):
 #        request.user.auth_token.delete()
-#       # logout(request)
+#        logout(request)
 #        return Response(status = status.HTTP_200_OK)
 #    
-#    #def get_context_data(self, **kwargs):
-    #    context = super(ProductTable, self).get_context_data(**kwargs)
-    #    response = requests.get("http://127.0.0.1:8001/api/product1/")
-    #    return context
-
-
+#    def get_context_data(self, **kwargs):
+#        context = super(ProductTable, self).get_context_data(**kwargs)
+#        response = requests.get("http://127.0.0.1:8001/api/product1/")
+#        return context
+#
+#
 
 #class UserViewSet(viewsets.ModelViewSet):
 #    """

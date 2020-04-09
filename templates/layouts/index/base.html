@@ -569,31 +569,32 @@
     
 </script>
 <script>
-	
-	 $("#miForm").submit(function (e) {
-		e.preventDefault(e);
-	var parameters = {};
-	parameters.username = $("#username").val();
-	parameters.email = $("#email").val();
-	parameters.password = $("#password").val();
-	
-	 $.ajax({
-	 type: "POST",
-	 contentType: 'application/json; charset=utf-8',
-	 url: "http://127.0.0.1:8001/api/users/",
-	 data: JSON.stringify(parameters),
-	 dataType: "json",
-	success: function (data) {
-	 console.log(data);
-	},
-	error: function (xhr, ajaxOptions, thrownError) {
-	 console.log(xhr);
-	 alert(xhr.responseText);
-	}
-	 });
-	
-	});
-	</script>
+//	
+//	 $("#miForm").submit(function (e) {
+//		e.preventDefault(e);
+//	var parameters = {};
+//	parameters.username = $("#username").val();
+//	parameters.email = $("#email").val();
+//	parameters.password = $("#password").val();
+//	
+//	 $.ajax({
+//	 type: "POST",
+//	 contentType: 'application/json; charset=utf-8',
+//	 url: "http://127.0.0.1:8001/api/users/",
+//	 data: JSON.stringify(parameters),
+//	 dataType: "json",
+//	success: function (data) {
+//	 console.log(data);
+//	},
+//	error: function (xhr, ajaxOptions, thrownError) {
+//	 console.log(xhr);
+//	 alert(xhr.responseText);
+//	}
+//	 });
+//	
+//	});
+//	
+//</script>
 <script>
 	//document.addEventListener("DOMContentLoaded", function(e) {
 	

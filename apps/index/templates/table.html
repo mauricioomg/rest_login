@@ -41,18 +41,27 @@
     <table class="table table-bordered table-striped" >
         <tr>
             <th>id</th>
-            <th>name</th>
-            <th>price</th>
-            <th>detail</th>
+            <th>nombre</th>
+            <th>precio</th>
+            <th>detalles</th>
+            <th>acciones</th>
         </tr>
              {% for dat in dataproduct  %}
         <tr>            
             <td>{{dat.id}}</td>
             <td>{{dat.fullname}}</td>
             <td>{{dat.price}}</td>
-            <td>{{dat.detail}}
-        </tr>
+            <td>{{dat.detail}}</td>
             
+        
+            
+            <td>
+                <a href="#"><i class="table_icon ti-eye mr-10"></i></a>
+                <a href="#"><i class="table_icon ti-pencil mr-10"></i></a>
+                    
+            </td>
+            
+        </tr>
             {% endfor %}
     </table>
 </div>       
