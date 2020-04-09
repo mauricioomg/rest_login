@@ -45,12 +45,15 @@
             <th>price</th>
             <th>detail</th>
         </tr>
-        <tr>
-            <td>{{id}}</td>
-            <td>{{fullname.fullname}}</td>
-            <td>{{price}}</td>
-            <td>{{detail}}</td>
+             {% for dat in dataproduct  %}
+        <tr>            
+            <td>{{dat.id}}</td>
+            <td>{{dat.fullname}}</td>
+            <td>{{dat.price}}</td>
+            <td>{{dat.detail}}
         </tr>
+            
+            {% endfor %}
     </table>
 </div>       
 

@@ -17,13 +17,13 @@ from django.contrib import admin
 from django.urls import path, include 
 from django.contrib.auth.decorators import login_required
 from rest_framework.authtoken import views
-from apps.usuario.views import Login, Logout, Register
+from apps.index.views import  Register
 
 
 urlpatterns = [ 
     path('admin/', admin.site.urls), 
     path('index/', include(('apps.index.urls','index'))),
-    path('usuario/', include(('apps.usuario.urls','usuario'))),
+    
     path('index_generate_token/', views.obtain_auth_token),
     #path('accounts/login/', Login.as_view(), name = 'login'),
     #path('logout/', Logout, name = 'logout'),
