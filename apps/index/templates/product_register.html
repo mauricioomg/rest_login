@@ -1,0 +1,14 @@
+{% extends 'layouts/index/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<form action="{% url 'create_product' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
+
+
+<input type="password" class="keyword-input text-center" placeholder="Contraseña" name="password" id="password">

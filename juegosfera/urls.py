@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include 
 from django.contrib.auth.decorators import login_required
 from rest_framework.authtoken import views
-from apps.index.views import Register
+from apps.index.views import Register, RegisterProduct
 
 
 urlpatterns = [ 
@@ -28,5 +28,6 @@ urlpatterns = [
     #path('accounts/login/', Login.as_view(), name = 'login'),
     #path('logout/', Logout, name = 'logout'),
     #path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('register/', Register.as_view(), name = 'register')
+    path('register/', Register.as_view(), name = 'register'),
+    path('create_product/', RegisterProduct.as_view(), name = 'create_product'),
 ]   

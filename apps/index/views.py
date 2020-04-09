@@ -4,6 +4,7 @@
 #from rest_framework import viewsets, permissions
 from django.views.generic import TemplateView
 #from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 import requests
 from .forms import *
@@ -54,7 +55,7 @@ class Register(TemplateView):
         return context
 
         
-class Register(TemplateView):
+class RegisterProduct(TemplateView):
     template_name = 'product_register.html'
     api_endpoint = "http://127.0.0.1:8001/api/product1/" 
     form_class = ProductForm
@@ -70,6 +71,7 @@ class Register(TemplateView):
             if response.status_code == 200 or response.status_code == 201:
                 print('success')
                 success = True
+                return HttpResponseRedirect('../index/table')
             else:
                 print('error')
                 response_json = response.json()
@@ -84,6 +86,7 @@ class Register(TemplateView):
         form = self.form_class(self.request.POST or None)
         context["form"] = form
         return context
+        
 
     
 

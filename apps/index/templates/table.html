@@ -65,7 +65,12 @@
         </tr>
             {% endfor %}
     </table>
+    <div class="create-btn-div">
+        <a href="{% url 'create_product' %}">
+            <button type="button" class="btn btn-primary waves-effect waves-light">Nuevo producto</button>
+        </a>
+    </div>
 </div>       
 
-    {% endblock content %}
+{% endblock content %}
     

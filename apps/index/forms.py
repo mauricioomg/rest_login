@@ -7,6 +7,6 @@ class  UserForm(forms.Form):
 
 class  ProductForm(forms.Form):
     fullname = forms.CharField(required=True)
-    price = forms.EmailField(required=True)
+    price = forms.FloatField(required=True)
     detail = forms.CharField(required=True)
 
