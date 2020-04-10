@@ -4,39 +4,49 @@
 
 {% block content %}
 
-<div class="form-title">
-    <i class="fa fa-key"></i>REGISTRO DE PRODUCTO
-</div>
 
-<form action="{% url 'create_product' %}" method="post">
-    {% csrf_token %}
-    <div class="form-row ">
-    <div class="form-group col-md-6">
-        <label for="fullname">Nombre</label>
-        <input style="background-color: white;" type="text" class="form-control text-center" placeholder="Nombre del producto"
-            name="fullname" id="fullname" {% if form.fullname.value %}
-            value="{{form.fullname.value}}" {% endif %}>
+
+
+<div class="container">
+    <div class="row d-block justify-content-center align-items-center">
+        
+        <div class="form-title">
+            <i class="fa fa-key"></i>REGISTRO DE PRODUCTO
+        </div>
+        
+        <form action="{% url 'create_product' %}" method="post">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-10">
+                    <label for="fullname">Nombre</label>
+                    <input style="background-color: white;" type="text" class="form-control text-center" placeholder="Nombre del producto"
+                        name="fullname" id="fullname" {% if form.fullname.value %}
+                        value="{{form.fullname.value}}" {% endif %}>
+                </div>
+                <div class="form-group col-10">
+                    <label for="price">Precio</label>
+                    <input style="background-color: white;" type="number" class="form-control text-center" placeholder="Precio del producto"
+                        name="price" id="price" {% if form.price.value %}
+                        value="{{form.price.value}}" {% endif %}>
+                </div>
+                
+                <div class="form-group col-10">
+                    <label for="detail">Detalle</label>
+                    <input style="background-color: white;" type="text" class="form-control text-center" placeholder="Breve descripción del producto"
+                        name="detail" id="detail" {% if form.detail.value %}
+                        value="{{form.detail.value}}" {% endif %}>
+                </div>
+            </div>
+        <br>
+            
+            <div class="create-btn-div">
+                <a href="{% url 'index:product_table' %}">
+                    <button type="submit" value="Submit" class="btn btn-danger waves-effect waves-light">CREAR</button>
+                </a>
+            </div>
+        </form>
+
     </div>
-    <div class="form-group col-md-6">
-        <label for="price">Precio</label>
-        <input style="background-color: white;" type="number" class="form-control text-center" placeholder="Precio del producto"
-            name="price" id="price" {% if form.price.value %}
-            value="{{form.price.value}}" {% endif %}>
-    </div>
-    </div>
-    <div class="form-group">
-    <label for="detail">Detalle</label>
-    <input style="background-color: white;" type="text" class="form-control text-center" placeholder="Breve descripción del producto"
-            name="detail" id="detail" {% if form.detail.value %}
-            value="{{form.detail.value}}" {% endif %}>
-    </div>
-<br>
-    
-    <div class="create-btn-div">
-        <a href="{% url 'index:product_table' %}">
-            <button type="submit" value="Submit" class="btn btn-danger waves-effect waves-light">CREAR</button>
-        </a>
-    </div>
-</form>
+</div>
 
 {% endblock %}
