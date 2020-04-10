@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include 
 from django.contrib.auth.decorators import login_required
 from rest_framework.authtoken import views
-from apps.index.views import Register, RegisterProduct, UpdateProduct, DeleteProduct
+from apps.index.views import Register, RegisterProduct, UpdateProduct, DeleteProduct, DetailProduct
 
 
 urlpatterns = [ 
@@ -32,4 +32,5 @@ urlpatterns = [
     path('create_product/', RegisterProduct.as_view(), name = 'create_product'),
     path('update_product/<int:pk>/', UpdateProduct.as_view(), name = 'update_product'),
     path('delete_product/<int:pk>/', DeleteProduct.as_view(), name = 'delete_product'),
+    path('detail_product/<int:pk>/', DetailProduct.as_view(), name = 'detail_product'),
 ]   

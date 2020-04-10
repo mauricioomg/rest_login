@@ -20,7 +20,7 @@ def product_get(request):
     return render(request,'table.html',{
         'dataproduct': data,
         })
-
+    
 
 class RegisterProduct(TemplateView):
     template_name = 'product_register.html'
@@ -90,24 +90,15 @@ class Register(TemplateView):
         
 
 
-class UpdateProduct (TemplateView):
+class UpdateProduct(TemplateView):
     template_name = 'product_register.html'
     api_endpoint = "http://127.0.0.1:8001/api/product1/" 
     form_class = ProductForm
-    
-    #def get_context_data(self, **kwargs):
-    #   context = super(UpdateProduct,self).get_context_data(**kwargs)        
-     #   pk = self.object.pk
-      #  print(pk)
-       # print("me ejecute perro")
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data()
         pk = self.kwargs.get('pk')
-        mivariable = str(pk)+"/"
-        
-        print (pk) 
-        print (context)
+        ep_pk = str(pk)+"/"
         form = context["form"]
         errors = []
         success = False
@@ -115,12 +106,12 @@ class UpdateProduct (TemplateView):
         if form.is_valid():
             data = form.cleaned_data
             print (data)
-            response = requests.put(self.api_endpoint+mivariable, json=data)
+            response = requests.put(self.api_endpoint+ep_pk, json=data)
             print(response)
+            return HttpResponseRedirect('../index/table')
             if response.status_code == 200 or response.status_code == 201:
                 print('success')
                 success = True
-               # return HttpResponseRedirect('../index/table')
             else:
                 print('error')
                 response_json = response.json()
@@ -134,56 +125,57 @@ class UpdateProduct (TemplateView):
         context = super().get_context_data(**kwargs)
         form = self.form_class(self.request.POST or None)
         context["form"] = form
-        #pk = self.kwargs.get('pk') 
-        #print (pk)
-        #print ("me ejecute perro 2")
         return context
     
-class DeleteProduct  (TemplateView):
+class DeleteProduct(TemplateView):
     template_name = 'delete.html'
     api_endpoint = "http://127.0.0.1:8001/api/product1/" 
     form_class = ProductForm
     
-    #def get_context_data(self, **kwargs):
-    #   context = super(UpdateProduct,self).get_context_data(**kwargs)        
-     #   pk = self.object.pk
-      #  print(pk)
-       # print("me ejecute perro")
-
     def post(self, request, *args, **kwargs):
         context = self.get_context_data()
         pk = self.kwargs.get('pk')
-        mivariable = str(pk)+"/"
-    
-        print (pk) 
-        print (context)
-        #form = context["form"]
+        ep_pk = str(pk)+"/"
         errors = []
         success = False
-    
-        
-            
-        
-        response = requests.delete(self.api_endpoint+mivariable )
+        response = requests.delete(self.api_endpoint+ep_pk)
         print(response)
+        
         if response.status_code == 200 or response.status_code == 201:
             print('success')
             success = True
-           # return HttpResponseRedirect('../index/table')
+            return HttpResponseRedirect('../../index/table')
         else:
             print('error')
             
-            
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         form = self.form_class(self.request.POST or None)
-        #context["form"] = form
-        #pk = self.kwargs.get('pk') 
-        #print (pk)
-        #print ("me ejecute perro 2")
         return context
 
+
+class DetailProduct(TemplateView):
+    template_name = 'detail_product.html'
+    api_endpoint = "http://127.0.0.1:8001/api/product1/" 
+    form_class = ProductForm
+    
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        pk = self.kwargs.get('pk')
+        ep_pk = str(pk)+"/"
+        errors = []
+        success = False
+        response = requests.get(self.api_endpoint+ep_pk)
+        print(response)
+        
+        if response.status_code == 200 or response.status_code == 201:
+            print('success')
+            success = True
+            data = response.json()
+            return render(request,self.template_name,{'object': data,})
+        else:
+            print('error')
+    
 
 #class Login(TemplateView):
 #    template_name = 'login.html'

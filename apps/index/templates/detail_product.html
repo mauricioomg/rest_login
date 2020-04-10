@@ -1,0 +1,44 @@
+{% extends 'layouts/index/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<section class="page-banner padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3 class="text-uppercase">{{object.fullname}}</h3>
+                <br>
+                <hr>
+            </div>
+            <div class="float-right container">
+                <h4 class="text-uppercase" >descripción del producto </h4>
+                <p class="text-left">{{object.detail}}</p>
+            </div>        
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs col-sm-6">
+            <h4 class="text-uppercase bottom20">detalles</h4>
+            <h5 class="text-uppercase"></h5>
+            <p class="bottom50">{{object.ubication_property}}</p>
+            <table class="table table-striped table-responsive">
+                <tbody>
+                    <tr>
+                        <td><b>Precio</b></td>
+                        <td class="text-right">${{object.price}}</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+       
+
+{% endblock content %}
+
