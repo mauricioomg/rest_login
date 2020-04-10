@@ -25,9 +25,9 @@
             <td>{{dat.price}}</td>
             <td>{{dat.detail}}</td>
             <td>
-                <a href="#"><i class="table_icon ti-eye mr-10"></i></a>
-                <a href="#"><i class="table_icon ti-pencil mr-10"></i></a>
-                <a href="#"><i class="table_icon ti-trash mr-10"></i></a>        
+                <a href="#"s><i class="table_icon ti-eye mr-10"></i></a>
+                <a href="{% url 'update_product' dat.id%}"><i class="table_icon ti-pencil mr-10"></i></a>
+                <a href="{% url 'delete_product' dat.id%}"><i class="table_icon ti-trash mr-10"></i></a>        
             </td> 
         </tr>
             {% endfor %}

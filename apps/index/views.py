@@ -14,14 +14,47 @@ class IndexView(TemplateView):
     template_name = "index.html"
 
 
-  
-
 def product_get(request):
     response = requests.get('http://127.0.0.1:8001/api/product1/')
     data = response.json()        
     return render(request,'table.html',{
         'dataproduct': data,
         })
+
+
+class RegisterProduct(TemplateView):
+    template_name = 'product_register.html'
+    api_endpoint = "http://127.0.0.1:8001/api/product1/" 
+    form_class = ProductForm
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        form = context["form"]
+        errors = []
+        success = False
+        if form.is_valid():
+            data = form.cleaned_data
+            response = requests.post(self.api_endpoint, json=data)
+            if response.status_code == 200 or response.status_code == 201:
+                print('success')
+                print ('yo me estoy ejecuntado')
+                success = True
+                return HttpResponseRedirect('../index/table')
+            else:
+                print('error')
+                response_json = response.json()
+                for error in response_json:
+                    errors.append(response_json[error])
+        context['errors'] = errors
+        context['success'] = success
+        return super(TemplateView, self).render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = self.form_class(self.request.POST or None)
+        context["form"] = form
+        return context
+        
 
 class Register(TemplateView):
     template_name = 'register.html'
@@ -55,23 +88,39 @@ class Register(TemplateView):
         return context
 
         
-class RegisterProduct(TemplateView):
+
+
+class UpdateProduct (TemplateView):
     template_name = 'product_register.html'
     api_endpoint = "http://127.0.0.1:8001/api/product1/" 
     form_class = ProductForm
+    
+    #def get_context_data(self, **kwargs):
+    #   context = super(UpdateProduct,self).get_context_data(**kwargs)        
+     #   pk = self.object.pk
+      #  print(pk)
+       # print("me ejecute perro")
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data()
+        pk = self.kwargs.get('pk')
+        mivariable = str(pk)+"/"
+        
+        print (pk) 
+        print (context)
         form = context["form"]
         errors = []
         success = False
+    
         if form.is_valid():
             data = form.cleaned_data
-            response = requests.post(self.api_endpoint, json=data)
+            print (data)
+            response = requests.put(self.api_endpoint+mivariable, json=data)
+            print(response)
             if response.status_code == 200 or response.status_code == 201:
                 print('success')
                 success = True
-                return HttpResponseRedirect('../index/table')
+               # return HttpResponseRedirect('../index/table')
             else:
                 print('error')
                 response_json = response.json()
@@ -85,10 +134,55 @@ class RegisterProduct(TemplateView):
         context = super().get_context_data(**kwargs)
         form = self.form_class(self.request.POST or None)
         context["form"] = form
+        #pk = self.kwargs.get('pk') 
+        #print (pk)
+        #print ("me ejecute perro 2")
         return context
-        
-
     
+class DeleteProduct  (TemplateView):
+    template_name = 'delete.html'
+    api_endpoint = "http://127.0.0.1:8001/api/product1/" 
+    form_class = ProductForm
+    
+    #def get_context_data(self, **kwargs):
+    #   context = super(UpdateProduct,self).get_context_data(**kwargs)        
+     #   pk = self.object.pk
+      #  print(pk)
+       # print("me ejecute perro")
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        pk = self.kwargs.get('pk')
+        mivariable = str(pk)+"/"
+    
+        print (pk) 
+        print (context)
+        #form = context["form"]
+        errors = []
+        success = False
+    
+        
+            
+        
+        response = requests.delete(self.api_endpoint+mivariable )
+        print(response)
+        if response.status_code == 200 or response.status_code == 201:
+            print('success')
+            success = True
+           # return HttpResponseRedirect('../index/table')
+        else:
+            print('error')
+            
+            
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = self.form_class(self.request.POST or None)
+        #context["form"] = form
+        #pk = self.kwargs.get('pk') 
+        #print (pk)
+        #print ("me ejecute perro 2")
+        return context
 
 
 #class Login(TemplateView):
