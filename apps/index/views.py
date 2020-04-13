@@ -141,12 +141,13 @@ class DeleteProduct(TemplateView):
         response = requests.delete(self.api_endpoint+ep_pk)
         print(response)
         
-        if response.status_code == 200 or response.status_code == 201:
+        if response.status_code == 200 or response.status_code == 204:
             print('success')
             success = True
             return HttpResponseRedirect('../../index/table')
         else:
             print('error')
+            
             
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
