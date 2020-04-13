@@ -94,6 +94,18 @@ class UpdateProduct(TemplateView):
     template_name = 'product_register.html'
     api_endpoint = "http://127.0.0.1:8001/api/product1/" 
     form_class = ProductForm
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        pk = self.kwargs.get('pk')
+        ep_pk = str(pk)+"/"
+        errors = []
+        success = False
+        response = requests.get(self.api_endpoint+ep_pk)
+        print(response)
+        data = response.json()
+        print("soy data")
+        print(data)
+        return render(request,self.template_name,{'object': data,})
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data()
@@ -108,10 +120,11 @@ class UpdateProduct(TemplateView):
             print (data)
             response = requests.put(self.api_endpoint+ep_pk, json=data)
             print(response)
-            return HttpResponseRedirect('../index/table')
+            
             if response.status_code == 200 or response.status_code == 201:
                 print('success')
                 success = True
+                return HttpResponseRedirect('../../index/table')
             else:
                 print('error')
                 response_json = response.json()
