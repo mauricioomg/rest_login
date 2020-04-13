@@ -6,8 +6,10 @@ from django.views.generic import TemplateView
 #from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse_lazy
 import requests
 from .forms import *
+from django.urls import reverse
 #from .services import get_username
 
 class IndexView(TemplateView):
@@ -26,7 +28,7 @@ class RegisterProduct(TemplateView):
     template_name = 'product_register.html'
     api_endpoint = "http://127.0.0.1:8001/api/product1/" 
     form_class = ProductForm
-
+    
     def post(self, request, *args, **kwargs):
         context = self.get_context_data()
         form = context["form"]
@@ -39,7 +41,7 @@ class RegisterProduct(TemplateView):
                 print('success')
                 print ('yo me estoy ejecuntado')
                 success = True
-                return HttpResponseRedirect('../index/table')
+                return HttpResponseRedirect(reverse('index:product_table'))
             else:
                 print('error')
                 response_json = response.json()
@@ -87,13 +89,12 @@ class Register(TemplateView):
         context["form"] = form
         return context
 
-        
-
 
 class UpdateProduct(TemplateView):
     template_name = 'product_register.html'
     api_endpoint = "http://127.0.0.1:8001/api/product1/" 
     form_class = ProductForm
+    
     def get(self, request, *args, **kwargs):
         context = self.get_context_data()
         pk = self.kwargs.get('pk')
@@ -104,7 +105,7 @@ class UpdateProduct(TemplateView):
         print(response)
         data = response.json()
         print("soy data")
-        print(data)
+        print(data)       
         return render(request,self.template_name,{'object': data,})
 
     def post(self, request, *args, **kwargs):
@@ -123,8 +124,8 @@ class UpdateProduct(TemplateView):
             
             if response.status_code == 200 or response.status_code == 201:
                 print('success')
-                success = True
-                return HttpResponseRedirect('../../index/table')
+                success = True                
+                return HttpResponseRedirect(reverse('index:product_table'))
             else:
                 print('error')
                 response_json = response.json()
@@ -140,6 +141,7 @@ class UpdateProduct(TemplateView):
         context["form"] = form
         return context
     
+
 class DeleteProduct(TemplateView):
     template_name = 'delete.html'
     api_endpoint = "http://127.0.0.1:8001/api/product1/" 
@@ -157,11 +159,10 @@ class DeleteProduct(TemplateView):
         if response.status_code == 200 or response.status_code == 204:
             print('success')
             success = True
-            return HttpResponseRedirect('../../index/table')
+            return HttpResponseRedirect(reverse('index:product_table'))
         else:
             print('error')
-            
-            
+                       
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         form = self.form_class(self.request.POST or None)
@@ -172,7 +173,7 @@ class DetailProduct(TemplateView):
     template_name = 'detail_product.html'
     api_endpoint = "http://127.0.0.1:8001/api/product1/" 
     form_class = ProductForm
-    
+      
     def get(self, request, *args, **kwargs):
         context = self.get_context_data()
         pk = self.kwargs.get('pk')
