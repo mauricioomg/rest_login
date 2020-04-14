@@ -1,3 +1,8 @@
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.cache import never_cache
+from django.utils.decorators import method_decorator
+from django.contrib.auth.forms import AuthenticationForm
+from django.views.generic.edit import FormView
 #from rest_framework.authentication import TokenAuthentication
 #from rest_framework.permissions import IsAuthenticated
 #from apps.index.serializers import UserSerializer
@@ -10,19 +15,26 @@ from django.urls import reverse_lazy
 import requests
 from .forms import *
 from django.urls import reverse
-#from .services import get_username
 
 class IndexView(TemplateView):
-    template_name = "index.html"
+   template_name = "index.html"
+
 
 
 def product_get(request):
-    response = requests.get('http://127.0.0.1:8001/api/product1/')
-    data = response.json()        
+    headers={}
+    print(request.session.get('token', False))
+    if request.session.get('token',False):
+        headers = {'autorization': 'Token ' + request.session.get('token',False)}
+    print(headers)
+    response = requests.get(
+        'http://127.0.0.1:8001/api/product1/',headers=headers)
+    data = response.json()  
+    print(data)      
     return render(request,'table.html',{
         'dataproduct': data,
         })
-    
+     
 
 class RegisterProduct(TemplateView):
     template_name = 'product_register.html'
@@ -192,27 +204,41 @@ class DetailProduct(TemplateView):
             print('error')
     
 
-#class Login(TemplateView):
-#    template_name = 'login.html'
-#    form_class = AuthenticationForm
-#    success_url = reverse_lazy('index:product_table')
-#
-#    @method_decorator(csrf_protect)
-#    @method_decorator(never_cache)
-#    def dispatch(self, request, *args, **kwargs):
-#        if request.user.is_authenticated:
-#            return HttpResponseRedirect(self.get_success_url())
-#        else:
-#            return super(Login, self).dispatch(request, *args, **kwargs)
-#
-#    def form_valid(self, form):
-#        user = authenticate(username = form.cleaned_data['username'], password = form.cleaned_data['password'])
-#        token,_ = Token.objects.get_or_create(user = user)
-#        if token:
-#            login(self.request, form.get_user())
-#            return super(Login, self).form_valid(form)
-#            
-#
+class Login(FormView):
+    template_name = 'login.html'
+    form_class = AuthenticationForm
+    success_url = reverse_lazy('index:product_table')
+
+    @method_decorator(csrf_protect)   
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return super(Login, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        data = {'username':form.cleaned_data['username'],
+                'password': form.cleaned_data['password']}
+        print (data)
+        response = requests.post(
+            'http://127.0.0.1:8001/api-token-auth/',json=data)
+        print(response)
+        print("aqui va data 2") 
+        print(data)   
+        response_json = response.json()
+        print("aqi va response")
+        print(response_json)
+        if 'token' in response_json:
+            self.request.session['token'] = response_json['token']
+        return super(Login, self) .form_valid(form)
+        
+
+        
+    ##    if token:
+    #        login(self.request, form.get_user())
+     #       return super(Login, self).form_valid(form)
+            
+
 #class Logout(APIView):
 #    def get(self, request, format = None):
 #        request.user.auth_token.delete()
@@ -223,11 +249,10 @@ class DetailProduct(TemplateView):
 #        context = super(ProductTable, self).get_context_data(**kwargs)
 #        response = requests.get("http://127.0.0.1:8001/api/product1/")
 #        return context
-#
-#
+
 
 #class UserViewSet(viewsets.ModelViewSet):
-#    """
+ #   """
 #    API endpoint that allows users to be viewed or edited.
 #    """
 #    queryset = User.objects.all().order_by('-date_joined')

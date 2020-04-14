@@ -15,7 +15,7 @@
             {% csrf_token %}
                 <div class="single-query form-group col-sm-12">
                     
-                    <input style = 'background-color: white;' type="text" class="keyword-input text-center" placeholder="Usuario" name="username" id="id_username" {% if form.username.value %} value="{{form.username.value}}" {% endif %} required>
+                    <input style = 'background-color: white;' type="text" class="keyword-input text-center" placeholder="Usuario" name="username" id="username" {% if form.username.value %} value="{{form.username.value}}" {% endif %} required>
                     {% if form.username.help_text %}
                         <p class="help">{{ form.username.help_text|safe }}</p>
                     {% endif %}
@@ -29,7 +29,7 @@
                 </div>
                 <div class="single-query form-group  col-sm-12">
                     
-                    <input style = 'background-color: white;' type="password" class="keyword-input text-center" placeholder="Contraseña" name="password" id="id_password" {% if form.password.value %} value="{{form.password.value}}" {% endif %} required>
+                    <input style = 'background-color: white;' type="password" class="keyword-input text-center" placeholder="Contraseña" name="password" id="password" {% if form.password.value %} value="{{form.password.value}}" {% endif %} required>
                     {% if form.password.help_text %}
                         <p class="help">{{ form.password.help_text|safe }}</p>
                     {% endif %}
