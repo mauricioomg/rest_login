@@ -204,7 +204,7 @@ class Login(FormView):
 
     @method_decorator(csrf_protect)   
     def dispatch(self, request, *args, **kwargs):
-        if request.session.get('token',True):
+        if request.session.get('token',False):
             return HttpResponseRedirect(reverse('index:product_table'))
         elif request.user.is_authenticated:
             return HttpResponseRedirect(self.get_success_url())
@@ -222,22 +222,41 @@ class Login(FormView):
         return super(Login, self) .form_valid(form)
 
 
+
 class Logout(FormView):
-    success_url = reverse_lazy('index:login')
-    token = 'http://127.0.0.1:8001/api-token-auth/'
 
-    def get(self,request, format=None):
-        #response = requests.delete(self.token)
-        response = request.user.auth_token.delete()
-        #request.user.api-token-auth.delete()
-        logout(request)
-        print(request)
-        return Response(status = status.HTTP_200_OK)
-        if response.status_code == 200 or response.status_code == 201:
-            return HttpResponseRedirect(self.get_success_url())
-        else:
-            return print('Error')
+    def login(request):
+        if request.method == 'POST':
+                #self.request.session['token'] = response_json['token']
+            #if request.session.test_cookie_worked():
+            if self.request.session['token']:
+                request.session.delete_token()
+                return HttpResponse("You're logged in.")
+            else:
+                return HttpResponse("Please enable cookies and try again.")
+        request.session.set_token()
+        return render(request, 'index/login')
 
+
+
+
+
+#class Logout(FormView):
+#    success_url = reverse_lazy('index:login')
+#    token = 'http://127.0.0.1:8001/api-token-auth/'
+#
+#    def get(self,request, format=None):
+#        #response = requests.delete(self.token)
+#        response = request.user.auth_token.delete()
+#        #request.user.api-token-auth.delete()
+#        logout(request)
+#        print(request)
+#        return Response(status = status.HTTP_200_OK)
+#        if response.status_code == 200 or response.status_code == 201:
+#            return HttpResponseRedirect(self.get_success_url())
+#        else:
+#            return print('Error')
+#
 
     
     #
