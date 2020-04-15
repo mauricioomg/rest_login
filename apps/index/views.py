@@ -17,7 +17,7 @@ from .forms import *
 from django.urls import reverse
 
 
-from django.contrib.auth import logout
+#from django.contrib.auth import logout
 
 
 class IndexView(TemplateView):
@@ -224,11 +224,13 @@ class Login(FormView):
 
 
 
-
-def logout_user(request):
-     response = logout(request, next_page=reverse('app.home.views.home'))
-     response.delete_cookie('user_location')
-     return HttpResponseRedirect(reverse('index:product_table'))
+def logout(request):
+    try:
+        del request.session['token']
+    except KeyError:
+        pass
+    
+    return HttpResponseRedirect(reverse('index:product_table'))
 
 
 
