@@ -223,19 +223,12 @@ class Login(FormView):
 
 
 
-class Logout(FormView):
 
-    def login(request):
-        if request.method == 'POST':
-                #self.request.session['token'] = response_json['token']
-            #if request.session.test_cookie_worked():
-            if self.request.session['token']:
-                request.session.delete_token()
-                return HttpResponse("You're logged in.")
-            else:
-                return HttpResponse("Please enable cookies and try again.")
-        request.session.set_token()
-        return render(request, 'index/login')
+
+def logout_user(request):
+     response = logout(request, next_page=reverse('app.home.views.home'))
+     response.delete_cookie('user_location')
+     return HttpResponseRedirect(reverse('index:product_table'))
 
 
 

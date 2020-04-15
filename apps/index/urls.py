@@ -9,7 +9,7 @@ urlpatterns = [
     path('table/', product_get, name='product_table'),
     path('register/', Register.as_view(), name = 'register'),
     path('login/', Login.as_view(), name='login'),
-    path('logout/', Logout.as_view(), name='logout'),
+    path('logout/', logout, name='logout'),
 
     path('create_product/', RegisterProduct.as_view(), name = 'create_product'),
     path('update_product/<int:pk>/', UpdateProduct.as_view(), name = 'update_product'),
