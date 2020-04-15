@@ -16,6 +16,10 @@ import requests
 from .forms import *
 from django.urls import reverse
 
+
+from django.contrib.auth import logout
+
+
 class IndexView(TemplateView):
    template_name = "index.html"
 
@@ -23,14 +27,15 @@ class IndexView(TemplateView):
 
 def product_get(request):
     headers={}
-    print(request.session.get('token', False))
     if request.session.get('token',False):
-        headers = {'autorization': 'Token ' + request.session.get('token',False)}
-    print(headers)
+        headers = {'Authorization': 'Token ' + request.session.get('token',False)}
+        print(headers)
+    else:
+        return HttpResponseRedirect(reverse('index:login'))
+        
     response = requests.get(
         'http://127.0.0.1:8001/api/product1/',headers=headers)
-    data = response.json()  
-    print(data)      
+    data = response.json()       
     return render(request,'table.html',{
         'dataproduct': data,
         })
@@ -51,7 +56,6 @@ class RegisterProduct(TemplateView):
             response = requests.post(self.api_endpoint, json=data)
             if response.status_code == 200 or response.status_code == 201:
                 print('success')
-                print ('yo me estoy ejecuntado')
                 success = True
                 return HttpResponseRedirect(reverse('index:product_table'))
             else:
@@ -114,10 +118,7 @@ class UpdateProduct(TemplateView):
         errors = []
         success = False
         response = requests.get(self.api_endpoint+ep_pk)
-        print(response)
-        data = response.json()
-        print("soy data")
-        print(data)       
+        data = response.json()     
         return render(request,self.template_name,{'object': data,})
 
     def post(self, request, *args, **kwargs):
@@ -127,13 +128,9 @@ class UpdateProduct(TemplateView):
         form = context["form"]
         errors = []
         success = False
-    
         if form.is_valid():
             data = form.cleaned_data
-            print (data)
-            response = requests.put(self.api_endpoint+ep_pk, json=data)
-            print(response)
-            
+            response = requests.put(self.api_endpoint+ep_pk, json=data)            
             if response.status_code == 200 or response.status_code == 201:
                 print('success')
                 success = True                
@@ -165,9 +162,7 @@ class DeleteProduct(TemplateView):
         ep_pk = str(pk)+"/"
         errors = []
         success = False
-        response = requests.delete(self.api_endpoint+ep_pk)
-        print(response)
-        
+        response = requests.delete(self.api_endpoint+ep_pk)        
         if response.status_code == 200 or response.status_code == 204:
             print('success')
             success = True
@@ -192,9 +187,7 @@ class DetailProduct(TemplateView):
         ep_pk = str(pk)+"/"
         errors = []
         success = False
-        response = requests.get(self.api_endpoint+ep_pk)
-        print(response)
-        
+        response = requests.get(self.api_endpoint+ep_pk)        
         if response.status_code == 200 or response.status_code == 201:
             print('success')
             success = True
@@ -211,7 +204,9 @@ class Login(FormView):
 
     @method_decorator(csrf_protect)   
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
+        if request.session.get('token',True):
+            return HttpResponseRedirect(reverse('index:product_table'))
+        elif request.user.is_authenticated:
             return HttpResponseRedirect(self.get_success_url())
         else:
             return super(Login, self).dispatch(request, *args, **kwargs)
@@ -219,40 +214,65 @@ class Login(FormView):
     def form_valid(self, form):
         data = {'username':form.cleaned_data['username'],
                 'password': form.cleaned_data['password']}
-        print (data)
         response = requests.post(
             'http://127.0.0.1:8001/api-token-auth/',json=data)
-        print(response)
-        print("aqui va data 2") 
-        print(data)   
         response_json = response.json()
-        print("aqi va response")
-        print(response_json)
         if 'token' in response_json:
             self.request.session['token'] = response_json['token']
         return super(Login, self) .form_valid(form)
 
 
-#def logout(request):
-#    try:
-#        del request.session['token']
-#        print(token)
-#    except KeyError:
-#        print('No se ha podido borrar el token beach')
-#        pass
-#
-#    return HttpResponseRedirect(reverse('index:login'))
-    
-
-
 class Logout(FormView):
-    def get(self, request, format = None):
-        request.data.Token.delete()
+    success_url = reverse_lazy('index:login')
+    token = 'http://127.0.0.1:8001/api-token-auth/'
+
+    def get(self,request, format=None):
+        #response = requests.delete(self.token)
+        response = request.user.auth_token.delete()
+        #request.user.api-token-auth.delete()
         logout(request)
         print(request)
         return Response(status = status.HTTP_200_OK)
+        if response.status_code == 200 or response.status_code == 201:
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return print('Error')
+
+
     
-    def get_context_data(self, **kwargs):
-        context = super(ProductTable, self).get_context_data(**kwargs)
-        response = requests.get('http://127.0.0.1:8001/api-token-auth/')
-        return context
+    #
+    #def post(self, request):
+    #    request.data.token.delete('http://127.0.0.1:8001/api-token-auth/')
+#
+    #    request.user.auth_token.delete()
+#
+    #    logout(request)
+    #    print(request)
+    #    return Response(status = status.HTTP_200_OK)
+    #    if status == status.HTTP_200_OK:
+    #        return HttpResponseRedirect(self.get_success_url())
+    #    else:
+    #        return print('Error')
+#
+    
+#    
+#
+#def post(self, request):
+#    return self.logout(request)
+#
+#def logout(self, request):
+#    try:
+#        request.user.auth_token.delete()
+#    except (AttributeError, ObjectDoesNotExist):
+#        pass
+#
+#    logout(request)
+#
+#    return Response({"success": _("Successfully logged out.")},
+#                    status=status.HTTP_200_OK)
+#
+#class Logout(APIView):
+#    def get(self, request, format=None):
+#        # simply delete the token to force a login
+#        request.user.auth_token.delete()
+#        return Response(status=status.HTTP_200_OK)

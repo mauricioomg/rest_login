@@ -3,52 +3,39 @@
 
 
 {% block content %}
+
 <div class="col-lg-4">
     <div class="we-login-register">
         <div class="form-title">
             <i class="fa fa-key"></i>Ingresa
             <span>Conoce nuestros productos</span>
         </div>  
-        <form role="form" method="post" enctype="multipart/form-data" class="callus clearfix">
+        <form role="form" method="post" enctype="multipart/form-data" class="we-form">
             {% csrf_token %}
-            <div class="single-query form-group col-sm-12">
-                
-                <input style = 'background-color: white;' type="text" class="keyword-input text-center" placeholder="Usuario" name="username" id="username" {% if form.username.value %} value="{{form.username.value}}" {% endif %} required>
-                {% if form.username.help_text %}
-                    <p class="help">{{ form.username.help_text|safe }}</p>
-                {% endif %}
-                {% if form.username.errors  %}                   
-                    <ul class="errorlist">
-                        {% for error in form.username.errors %}
-                            <li><strong class="text-danger">{{ error|escape }}</strong></li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}  
-            </div>
-            <div class="single-query form-group  col-sm-12">
-                
-                <input style = 'background-color: white;' type="password" class="keyword-input text-center" placeholder="Contraseña" name="password" id="password" {% if form.password.value %} value="{{form.password.value}}" {% endif %} required>
-                {% if form.password.help_text %}
-                    <p class="help">{{ form.password.help_text|safe }}</p>
-                {% endif %}
-                {% if form.password.errors %}
-                    <ul class="errorlist">
-                        {% for error in form.password.errors %}
-                            <li><strong class="text-danger">{{ error|escape }}</strong></li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="col-sm-6">
-                        <div class="search-form-group white form-group text-left"></div>
-                    </div>
-                </div>
-            </div>
-            <div class=" col-sm-12">
-                <input type="submit" value="Ingresar" class="btn-slide border_radius"> 
-            </div>
+            <input style = 'background-color: white;' type="text" class="keyword-input text-center" placeholder="Usuario" name="username" id="username" {% if form.username.value %} value="{{form.username.value}}" {% endif %} required>
+            {% if form.username.help_text %}
+                <p class="help">{{ form.username.help_text|safe }}</p>
+            {% endif %}
+            {% if form.username.errors  %}                   
+                <ul class="errorlist">
+                    {% for error in form.username.errors %}
+                        <li><strong class="text-danger">{{ error|escape }}</strong></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}                  
+            <input type="password" class="keyword-input text-center" placeholder="Contraseña" name="password" id="password" {% if form.password.value %} value="{{form.password.value}}" {% endif %} required>
+            {% if form.password.help_text %}
+                <p class="help">{{ form.password.help_text|safe }}</p>
+            {% endif %}
+            {% if form.password.errors %}
+                <ul class="errorlist">
+                    {% for error in form.password.errors %}
+                        <li><strong class="text-danger">{{ error|escape }}</strong></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <button type="submit" id="btnSend" data-ripple="">Ingresar</button>
+            
         </form>
     </div>
 </div>
