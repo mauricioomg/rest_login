@@ -17,20 +17,11 @@ from django.contrib import admin
 from django.urls import path, include 
 from django.contrib.auth.decorators import login_required
 from rest_framework.authtoken import views
-from apps.index.views import Register, RegisterProduct, UpdateProduct, DeleteProduct, DetailProduct
 
 
 urlpatterns = [ 
     path('admin/', admin.site.urls), 
     path('index/', include(('apps.index.urls','index'))),
-    
     path('index_generate_token/', views.obtain_auth_token),
-    #path('accounts/login/', Login.as_view(), name = 'login'),
-    #path('logout/', Logout, name = 'logout'),
-    #path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('register/', Register.as_view(), name = 'register'),
-    path('create_product/', RegisterProduct.as_view(), name = 'create_product'),
-    path('update_product/<int:pk>/', UpdateProduct.as_view(), name = 'update_product'),
-    path('delete_product/<int:pk>/', DeleteProduct.as_view(), name = 'delete_product'),
-    path('detail_product/<int:pk>/', DetailProduct.as_view(), name = 'detail_product'),
+    
 ]   

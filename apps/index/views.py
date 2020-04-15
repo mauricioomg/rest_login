@@ -231,31 +231,28 @@ class Login(FormView):
         if 'token' in response_json:
             self.request.session['token'] = response_json['token']
         return super(Login, self) .form_valid(form)
-        
-
-        
-    ##    if token:
-    #        login(self.request, form.get_user())
-     #       return super(Login, self).form_valid(form)
-            
-
-#class Logout(APIView):
-#    def get(self, request, format = None):
-#        request.user.auth_token.delete()
-#        logout(request)
-#        return Response(status = status.HTTP_200_OK)
-#    
-#    def get_context_data(self, **kwargs):
-#        context = super(ProductTable, self).get_context_data(**kwargs)
-#        response = requests.get("http://127.0.0.1:8001/api/product1/")
-#        return context
 
 
-#class UserViewSet(viewsets.ModelViewSet):
- #   """
-#    API endpoint that allows users to be viewed or edited.
-#    """
-#    queryset = User.objects.all().order_by('-date_joined')
-#    serializer_class = UserSerializer
-#    permission_classes = [permissions.IsAuthenticated]
-#    authentication_class = (TokenAuthentication)
+#def logout(request):
+#    try:
+#        del request.session['token']
+#        print(token)
+#    except KeyError:
+#        print('No se ha podido borrar el token beach')
+#        pass
+#
+#    return HttpResponseRedirect(reverse('index:login'))
+    
+
+
+class Logout(FormView):
+    def get(self, request, format = None):
+        request.data.Token.delete()
+        logout(request)
+        print(request)
+        return Response(status = status.HTTP_200_OK)
+    
+    def get_context_data(self, **kwargs):
+        context = super(ProductTable, self).get_context_data(**kwargs)
+        response = requests.get('http://127.0.0.1:8001/api-token-auth/')
+        return context
