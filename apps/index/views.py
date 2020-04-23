@@ -15,7 +15,17 @@ import requests
 class IndexView(TemplateView):
    template_name = "index.html"
 
+class UpdateList(TemplateView):
+    template_name = "reload.html"
 
+    def get_context_data(self,**kwargs):
+        
+        context = super(UpdateList,self).get_context_data(**kwargs)         
+        response = requests.get(
+        'http://127.0.0.1:8001/api/product1/')
+        data = response.json()       
+        context['data'] = data  
+        return context 
 
 def product_get(request):
     headers={}

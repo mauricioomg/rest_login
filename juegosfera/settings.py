@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.index',
+    'intercoolerjs',
     #'rest_framework',
     #'rest_framework.authtoken',
     #'corsheaders',
