@@ -1,5 +1,5 @@
 {% if data %}
-esta pendejada se esta ejecutando 
+esta pendejada se esta ejecutando
 
 <table class="table table-striped table-hover table-dark">
     <tr>
@@ -9,8 +9,8 @@ esta pendejada se esta ejecutando
         <th><strong>DETALLES</strong></th>
         <th><strong>ACCIONES</strong></th>
     </tr>
-        {% for dat in data  %}
-    <tr>            
+    {% for dat in data  %}
+    <tr>
         <td>{{dat.id}}</td>
         <td>{{dat.fullname}}</td>
         <td>{{dat.price}}</td>
@@ -18,18 +18,13 @@ esta pendejada se esta ejecutando
         <td>
             <a href=" {% url 'index:detail_product' dat.id %} "><i class="table_icon ti-eye mr-10"></i></a>
             <a href=" {% url 'index:update_product' dat.id %} "><i class="table_icon ti-pencil mr-10"></i></a>
-            <a href=" {% url 'index:delete_product' dat.id %} "><i class="table_icon ti-trash mr-10"></i></a>        
-            <div ic-get-from="/index/table/update" ic-poll="15s" ic-target="#table"
-            ic-trigger-on="load"></div>
-        </td> 
+            <a href=" {% url 'index:delete_product' dat.id %} "><i class="table_icon ti-trash mr-10"></i></a>
+        </td>
     </tr>
-    <div id=table >
-        
-    </div>
-        {% endfor %}
-
+    {% endfor %}
+</table>
 
 {% else %}
-esta pendejada no se esta ejecutando correctamente 
+esta pendejada no se esta ejecutando correctamente
 
 {% endif %}

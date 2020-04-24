@@ -6,8 +6,8 @@ from .views import *
 app_name = 'index' 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
-    path('table/', product_get, name='product_table'),
-    path('table/update', UpdateList.as_view(), name='UpdateList'),
+    path('table/', ProductList.as_view(), name='product_table'),
+    # path('table/update', UpdateList.as_view(), name='UpdateList'),
     path('register/', Register.as_view(), name = 'register'),
     path('login/', Login.as_view(), name='login'),
     path('logout/', logout, name='logout'),

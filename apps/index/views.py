@@ -15,32 +15,38 @@ import requests
 class IndexView(TemplateView):
    template_name = "index.html"
 
-class UpdateList(TemplateView):
-    template_name = "reload.html"
+class ProductList(TemplateView):
+    template_name = "table.html"
+
+    def get_template_names(self):
+        template_name = "table.html"
+        intercooler = self.request.GET.get('ic-request', None)
+        if intercooler:
+            template_name = "reload.html"
+        return template_name
 
     def get_context_data(self,**kwargs):
-        
-        context = super(UpdateList,self).get_context_data(**kwargs)         
+        context = super(ProductList,self).get_context_data(**kwargs)         
         response = requests.get(
         'http://127.0.0.1:8001/api/product1/')
         data = response.json()       
         context['data'] = data  
         return context 
 
-def product_get(request):
-    headers={}
-    if request.session.get('token',False):
-        headers = {'Authorization': 'Token ' + request.session.get('token',False)}
-        print(headers)
-    else:
-        return HttpResponseRedirect(reverse('index:login'))
+# def product_get(request):
+#     headers={}
+#     if request.session.get('token',False):
+#         headers = {'Authorization': 'Token ' + request.session.get('token',False)}
+#         print(headers)
+#     else:
+#         return HttpResponseRedirect(reverse('index:login'))
         
-    response = requests.get(
-        'http://127.0.0.1:8001/api/product1/',headers=headers)
-    data = response.json()       
-    return render(request,'table.html',{
-        'dataproduct': data,
-        })
+#     response = requests.get(
+#         'http://127.0.0.1:8001/api/product1/',headers=headers)
+#     data = response.json()       
+#     return render(request,'table.html',{
+#         'dataproduct': data,
+#         })
      
 
 class RegisterProduct(TemplateView):
