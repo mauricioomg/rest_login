@@ -19,11 +19,7 @@ esta pendejada se esta ejecutando
             <a href=" {% url 'index:detail_product' dat.id %} "><i class="table_icon ti-eye mr-10"></i></a>
             <a href=" {% url 'index:update_product' dat.id %} "><i class="table_icon ti-pencil mr-10"></i></a>
             <a href=" {% url 'index:delete_product' dat.id %} "><i class="table_icon ti-trash mr-10"></i></a>        
-            <div ic-get-from="/index/table/update" ic-poll="15s" ic-target="#table"
-            ic-trigger-on="load"></div>
-        </td> 
-    </tr>
-    <div id=table >
+           
         
     </div>
         {% endfor %}
